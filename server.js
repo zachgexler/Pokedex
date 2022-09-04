@@ -9,18 +9,16 @@ app.use(methodOverride("_method"));
 app.use((req, res, next) => {
     next()
 })
-
-
-app.post("/pokemon", (req, res) => {
-    console.log(req.body)
-    res.send("data received")
-})
-
 app.get("/pokemon/", function (req, res) {
     res.render("index.ejs", {
         allPokemon: pokemon
     })
 });
+
+app.post("/pokemon", (req, res) => {
+    console.log(req.body)
+    res.send("data received")
+})
 
 app.get("/pokemon/new", function (req, res) {
     res.render("new.ejs")
