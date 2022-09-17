@@ -1,26 +1,35 @@
 <!DOCTYPE html>
-<html>
-  <link rel="stylesheet" href="/style.css">
-  <head>
-    <meta charset="utf-8" />
-    <title>Pokedex</title>
-  </head>
-  <body>
-    <div id="header">
-        <h1>Pokedex</h1>
-        <button id="Add"><a href="/pokemon/new">Add A New Pokemon</a></button>
-      </div>
-        <div id="items">
-        <% for (i = 0; i < pokedex.length; i++) { %>
-        <h2><%=pokedex[i].name%></h2><br>
-        <h2><%=pokedex[i].hp%></h2><br>
-        <h2><%=pokedex[i].hp%></h2>
-        <a href="/pokemon/<%=[i]%>"><img src="<%=pokedex[i].img%>"></a>
-        <form action="/pokemon/<%=i %>?_method=DELETE" method="POST">
-          <input type="submit" value="DELETE" />
-        </form>
-        <a href="/pokemon/<%= i %>/edit">Edit</a>
-        <% } %>
-    </div>
-  </body>
+<html lang="english">
+
+
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <!-- meta (data pulled from the web) -->
+  <!-- linking to js and css within html -->
+  <!-- all this goes into the head because it lets internet read (metadata) about the document, like its title, scripts, and style sheets -->
+  <link href="/css/style.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+
+  <div id="header">
+    <h1>Pokedex</h1>
+    <button id="Add"><a href="/pokemon/new">Add A New Pokemon</a></button>
+  </div>
+  <div id="items">
+    <% for (i=0; i < pokedex.length; i++) { %>
+      <h2>
+        <%=pokedex[i].name%> | Type:<%=pokedex[i].type%>
+      </h2>
+      <a href="/pokemon/<%=[i]%>"><img src="<%=pokedex[i].img%>"></a>
+      <form action="/pokemon/<%=i %>?_method=DELETE" method="POST">
+        <input type="submit" value="DELETE" />
+      </form>
+      <a href="/pokemon/<%= i %>/edit">Edit</a>
+      <% } %>
+  </div>
+</body>
+
 </html>
