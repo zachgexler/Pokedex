@@ -1,22 +1,27 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <img src="<%=pokemon.img %>">
-    <h1>Info</h1>
-    <h2>Name: <%=pokemon.name; %></h2>
-    <h2>Type: <%=pokemon.type; %></h2>
-    <li><%=pokemon.stats.hp; %> </li>
-    <li><%=pokemon.stats.attack; %> </li>
-    <li><%=pokemon.stats.defense; %> </li>
-    <p><a class="button" href="/">Back</a></p>
-
+<html>
+  <link rel="stylesheet" href="/style.css">
+  <head>
+    <meta charset="utf-8" />
+    <title>Pokedex | <%= pokemonId.name %></title>
+  </head>
+  <body>
+    <h1><%=pokemonId.name%></h1>
+    <img src="<%=pokemonId.img%>">
+    <h4>Type</h4>
+    <ul>
+        <% for (i = 0; i < pokemonId.type.length; i++) { %>
+            <li>
+                <%=pokemonId.type[i]%>
+            </li>
+       <% } %>
     </ul>
+    <h4>Stats</h4>
+    <% for (const stats in pokemonId.stats) {%>
+    <p>
+        <%=stats%>: <%=pokemonId.stats[stats]%>
+    </p>
+    <% } %>
 
-</body>
+  </body>
 </html>

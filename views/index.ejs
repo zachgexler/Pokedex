@@ -1,37 +1,26 @@
 <!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<html>
+  <link rel="stylesheet" href="/style.css">
+  <head>
+    <meta charset="utf-8" />
     <title>Pokedex</title>
-</head>
-
-<body>
-    <h1>Pokedex App</h1>
-    <nav>
-        <a href="/pokemon/new">Create a New Pokemon</a>
-    </nav>
-    <ul>
-
-        <% for(let i=0; i < allPokemon.length; i++) { %>
-            <li>
-                        <a href="/pokemon/<%=i%>"> <img src="<%=allPokemon[i].img %>"/></a><br>
-                        <a href="/pokemon/<%=i%>">
-                            <%=allPokemon[i].name %></a><br>
-                        <a href="/pokemon/<%=i%>">
-                            <%=allPokemon[i].type %>
-                        </a><br>
-                        <form action="/pokemon/<%=i; %>?_method=DELETE" method="POST">
-                            <input type="submit" value="DELETE" />
-                        </form>
-            </li>
-            <% } %>
-    </ul>
-    
-    <a href="/pokemon/">Back to Index</a>
-
-</body>
-
+  </head>
+  <body>
+    <div id="header">
+        <h1>Pokedex</h1>
+        <button id="Add"><a href="/pokemon/new">Add A New Pokemon</a></button>
+      </div>
+        <div id="items">
+        <% for (i = 0; i < pokedex.length; i++) { %>
+        <h2><%=pokedex[i].name%></h2><br>
+        <h2><%=pokedex[i].hp%></h2><br>
+        <h2><%=pokedex[i].hp%></h2>
+        <a href="/pokemon/<%=[i]%>"><img src="<%=pokedex[i].img%>"></a>
+        <form action="/pokemon/<%=i %>?_method=DELETE" method="POST">
+          <input type="submit" value="DELETE" />
+        </form>
+        <a href="/pokemon/<%= i %>/edit">Edit</a>
+        <% } %>
+    </div>
+  </body>
 </html>

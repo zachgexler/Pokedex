@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <link rel="stylesheet" href="/style.css">
+  <head>
+    <meta charset="utf-8" />
+    <title>Pokedex| Edit Pokemon</title>
+  </head>
+  <body>
+    <h1>Edit Pokemon</h1>
+    <form action="/pokemon/<%=pokemonId%>?_method=PUT" method="POST">
+      <!--  NOTE: the form is pre-populated with values for the server-->
+      <input type="text" name="name" value="<%=pokemon.name%>" placeholder="name"" /><br />
+      <input type="text" name="id" value="<%=pokemon.id%>" placeholder="id"/><br />
+      <input type="text" name="img" value="<%=pokemon.img%>" placeholder="img (url)"/><br />
+      <input type="text" name="type" value="<%=pokemon.type%>" placeholder="type"/><br />
+      <input type="text" name="hp" value="<%=pokemon.stats.hp%>" placeholder="hp"/><br/>
+      <input type="text" name="attack" value="<%=pokemon.stats.attack%>" placeholder="attack"/><br/>
+      <input type="text" name="defense" value="<%=pokemon.stats.defense%>" placeholder="defense"/><br/>
+      <input type="submit" name="" value="Submit Changes" />
+    </form>
+    
+  </body>
+</html>

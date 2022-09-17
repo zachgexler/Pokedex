@@ -1,81 +1,125 @@
-const express = require('express');
-const app = express();
-const pokemon = require("./models/pokemon")
-const port = 3000;
+//====================
+//DECLARE DEPENDENCIES
+//====================
+const express = require("express")
+const pokemon = require("./models/pokemon.js")
 const methodOverride = require("method-override")
 
-app.use(methodOverride("_method"));
+//=====================
+//INITIALIZING EXPRESS
+//=====================
 
+const app = express();
 
-app.use((req, res, next) => {
-    next()
+//====================
+//MIDDLEWARE
+//====================
+
+//TELLING EXPRESS TO USE MIDDLEWARE
+  //Returns middleware that only parses urlencoded bodies and only looks at requests where the Content-Type header matches the type option
+  //The extended option allows to choose between parsing the URL-encoded data with the querystring library (when false) or the qs library (when true).
+  app.use(express.static('public'))
+  app.use(express.urlencoded({extended: false}))
+  app.use(methodOverride("_method"))
+
+//====================
+//DEFINE ROUTES
+//====================
+
+//INDEX
+//SHOW
+//NEW
+//EDIT
+//CREATE
+//UPDATE
+//DELETE
+
+//LANDING PAGE
+app.get("/", (req, res) => {
+    res.send("Welcome!")
 })
-app.get("/pokemon/", function (req, res) {
+
+//INDEX
+app.get("/pokemon", (req, res) => {
     res.render("index.ejs", {
-        allPokemon: pokemon
-    })
-});
-
-app.get("/pokemon/:indexOfPokemonArray", function (req, res) {
-    res.render("show.ejs", {
-        pokemon: pokemon[req.params.indexOfPokemonArray]
+        pokedex: pokemon //renders index page and defines variable
     })
 })
 
-app.get("/pokemon/:new", function (req, res) {
-    res.render("new.ejs")
-  })
-  
-app.delete("/pokemon/:indexOfPokemonArray", (req, res) => {
-    pokemon.splice(req.params.indexOfPokemonArray, 1) //remove the item from the array
-    res.redirect("/pokemon") //redirect back to index route
-  })
+//NEW
+app.get("/pokemon/new", (req, res) => {
+   res.render("new.ejs", {
+    pokedex: pokemon //renders new page and defines variable
+   })
+})
 
+//DELETE
+app.delete("/pokemon/:id", (req, res) => {
+        pokemon.splice(req.params.id, 1) //splices the pokemon at indicated id from the pokemon array
+        res.redirect("/pokemon") //redirects user back to pokedex
+})
+
+//UPDATE
+app.put("/pokemon/:id", (req, res) => {
+    let type = req.body.type; //assings var type to the data received in the html body value "type"
+    let typeArr = type.split(', ') //splits the received variable based on the input and redefines as an array
+    let statsObject = {
+        hp: req.body.hp,
+        attack: req.body.attack,
+        defense: req.body.defense,
+    };
+
+    let newPokemon = {
+        id: req.body.id,//object id now input id
+        name: req.body.name,//object name now input name
+        img: req.body.img,//object img now input img
+        type: typeArr,//object type now input type array
+        stats: statsObject//stats object
+
+    };
+    pokemon[req.params.id] = newPokemon //puts pokemon at indicated index as info received from "new"
+    res.redirect("/pokemon")}) //redirects user back to pokedex
+
+//CREATE
 app.post("/pokemon", (req, res) => {
-    console.log(req.body)
-    res.send("data received")
+    let type = req.body.type; //assings var type to the data received in the html body value "type"
+    let typeArr = type.split(', ') //splits the received variable based on the input and redefines as an array
+    let statsObject = {
+        hp: req.body.hp,
+        attack: req.body.attack,
+        defense: req.body.defense,
+    };
+
+    let newPokemon = {
+        id: req.body.id,//object id now input id
+        name: req.body.name,//object name now input name
+        img: req.body.img,//object img now input img
+        type: typeArr,//object type now input type array
+        stats: statsObject//stats object
+
+    };
+    pokemon.push(newPokemon) //pushes new pokemon object to the pokemon array
+    //console.log(newPokemon)
+    res.redirect("/pokemon") //redirects user back to pokedex
 })
 
-app.get("/pokemon/:new", function (req, res) {
-    res.redirect("new.ejs")
-  })
-
-app.get("/pokemon/:indexOfPokemonArray", function (req, res) {
-    res.render("show.ejs", {
-        pokemon: pokemon[req.params.indexOfPokemonArray]
+//EDIT
+app.get("/pokemon/:id/edit", (req, res) => {
+    res.render("edit.ejs", {
+    pokemon: pokemon[req.params.id],//redefines pokemon as pokemon at specific index
+    pokemonId: req.params.id//sets pokemonId equal to the exact number it is in the pokemon array
     })
 })
 
-app.delete("/pokemon:indexOfPokemonArray", (req, res) => {
-    pokemon.splice(req.params.indexOfPokemonArray) //remove the item from the array
-    res.redirect("/pokemon") //redirect back to index route
+//SHOW
+app.get("/pokemon/:id", (req, res) => {
+    console.log(pokemon[req.params.id])//console logging the specific pokemon's data object
+    res.render("show.ejs", {
+        pokemonId: pokemon[req.params.id]//sets pokemonId as the specific index of pokemon data
+    })
 })
 
-app.get("/pokemon/:id"), function (res, req) {
-    res.render("show.ejs", {
-        pokemonId: pokemon[req.params.id]
-    }
-    )
-}
-
-
-// TELL OUR APP TO LISTEN ON PORT...
-app.listen(port, () => {
-    console.log(`listening on port `, port)
-});
-
-
-// Index
-// GET /pokemon
-// Show
-// GET /pokemon/:id
-// New
-// GET /pokemon/new
-// Edit
-// GET /pokemon/:id/edit
-// Create
-// POST /pokemon
-// Update
-// PUT /pokemon/:id
-// Destroy
-// DELETE /pokemon/:id
+//CANN YOUUU HEARRRR MEEEE
+app.listen(3000, () => {
+    console.log("GOTTA CATCH 'EM ALL")
+})
